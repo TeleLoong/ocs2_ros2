@@ -33,6 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <pinocchio/multibody/geometry.hpp>
 #include <pinocchio/parsers/urdf.hpp>
 
+#include <tinyxml2.h>
 #include <urdf_parser/urdf_parser.h>
 
 #include <ocs2_sphere_approximation/PinocchioSphereInterface.h>
@@ -111,10 +112,12 @@ void PinocchioSphereInterface::buildGeomFromPinocchioInterface(const PinocchioIn
 
   // TODO: Replace with pinocchio function that uses the ModelInterface directly
   // As of 19-04-21 there is no buildGeom that takes a ModelInterface, so we deconstruct the modelInterface into a std::stringstream first
+  using TiXmlDocument = tinyxml2::XMLDocument;
+  using TiXmlPrinter = tinyxml2::XMLPrinter;
   const std::unique_ptr<const TiXmlDocument> urdfAsXml(urdf::exportURDF(*pinocchioInterface.getUrdfModelPtr()));
   TiXmlPrinter printer;
   urdfAsXml->Accept(&printer);
-  const std::stringstream urdfAsStringStream(printer.Str());
+  const std::stringstream urdfAsStringStream(printer.CStr());
 
   pinocchio::urdf::buildGeom(pinocchioInterface.getModel(), urdfAsStringStream, pinocchio::COLLISION, geomModel);
 }

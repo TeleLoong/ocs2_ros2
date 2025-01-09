@@ -13,6 +13,8 @@ set(dependencies
 find_package(ament_cmake REQUIRED)
 find_package(ocs2_pinocchio_interface REQUIRED)
 find_package(ocs2_robotic_assets REQUIRED)
+find_package(pinocchio REQUIRED)
+find_package(hpp-fcl REQUIRED)
 
 ###########
 ## Build ##
@@ -39,7 +41,7 @@ target_include_directories(${PROJECT_NAME}
         PUBLIC
         "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
         "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>")
-
+target_link_libraries(${PROJECT_NAME} ${pinocchio_LIBRARIES} hpp-fcl::hpp-fcl)
 ament_target_dependencies(${PROJECT_NAME} ${dependencies})
 target_compile_options(${PROJECT_NAME} PUBLIC ${FLAGS})
 
