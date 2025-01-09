@@ -44,7 +44,7 @@ foreach (HEADER_FILE ${HEADERS})
 endforeach ()
 
 # Install the library where ament_cmake expects them
-set_target_properties(blasfeo PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${BLASFEO_LIB_DIR})
+# set_target_properties(blasfeo PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${BLASFEO_LIB_DIR})
 
 # Propagate dependencies
 ament_export_include_directories(include)
